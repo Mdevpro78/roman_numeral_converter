@@ -21,6 +21,7 @@ managed = true
 dev-dependencies = [
     "ruff>=0.6.9",
     "black>=24.10.0",
+    "pyupgrade>=3.18.0",
 ]
 
 [tool.hatch.metadata]
