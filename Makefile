@@ -35,4 +35,4 @@ dupdtests:
 	docker compose -f docker-compose.yaml -f docker-compose.test.yaml up -d
 
 druntest:
-	docker compose -f docker-compose.yaml -f docker-compose.test.yaml exec -it backend sh /app/scripts/run_tests.sh
+	docker compose -f docker-compose.yaml -f docker-compose.test.yaml exec -it backend sh -c "dos2unix /app/scripts/run_tests.sh && /app/scripts/run_tests.sh"
