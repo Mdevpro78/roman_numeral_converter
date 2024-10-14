@@ -9,6 +9,19 @@ repos:
       # Run the formatter.
       - id: ruff-format
 
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-ast
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+      - id: detect-private-key
+      - id: pretty-format-json
+      - id: check-merge-conflict
+      
 
 
 default_language_version:
