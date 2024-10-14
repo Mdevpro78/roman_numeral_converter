@@ -23,6 +23,7 @@ dev-dependencies = [
     "black>=24.10.0",
     "pyupgrade>=3.18.0",
     "pre-commit>=4.0.1",
+    "add-trailing-comma>=3.1.0",
 ]
 
 [tool.hatch.metadata]

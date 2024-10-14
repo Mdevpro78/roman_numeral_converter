@@ -10,6 +10,7 @@
 #   universal: false
 
 -e file:.
+add-trailing-comma==3.1.0
 black==24.10.0
 cfgv==3.4.0
     # via pre-commit
@@ -40,6 +41,7 @@ pyyaml==6.0.2
     # via pre-commit
 ruff==0.6.9
 tokenize-rt==6.0.0
+    # via add-trailing-comma
     # via pyupgrade
 tomli==2.0.2
     # via black
