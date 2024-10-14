@@ -7,3 +7,4 @@ from fastapi import HTTPException as HTTPException
 
 
 from src.conversion.exceptions import InvalidRomanNumeralValueError as InvalidRomanNumeralValueError
+from src.conversion.value_objects import RomanNumeral as RomanNumeral
