@@ -16,3 +16,21 @@ def test_valid_roman_numerals(roman, expected) -> None:
 	response = client.post(_endpoint, json={"roman_numeral": roman})  # Adjust endpoint as necessary
 	assert response.status_code == 200
 	assert response.json() == expected
+
+
+# Test invalid types (non-string input)
+@pytest.mark.parametrize(
+	"invalid_input",
+	[
+		123,  # Integer not allowed
+		5.67,  # Float not allowed
+		None,  # None not allowed
+		[],  # List not allowed
+		{},  # Dictionary not allowed
+		("IV", "V"),  # Tuple not allowed
+	],
+)
+def test_invalid_numeral_type(invalid_input) -> None:
+	"""Test case for handling invalid numeral types, just string type is valid."""
+	response = client.post(_endpoint, json={"roman_numeral": invalid_input})
+	assert response.status_code == 422  # Unprocessable Entity for validation errors
