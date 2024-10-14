@@ -27,6 +27,8 @@ dev-dependencies = [
     "pyupgrade>=3.18.0",
     "pre-commit>=4.0.1",
     "add-trailing-comma>=3.1.0",
+    "pytest>=8.3.3",
+    "roman>=4.2",
 ]
 
 [tool.hatch.metadata]
