@@ -1,0 +1,8 @@
+name: roman_converter
+
+services:
+  backend:
+    volumes:
+      - "./tests:/app/tests"
+      - "./requirements-dev.lock:/app/requirements-dev.lock"
+      - "./scripts:/app/scripts"
