@@ -4,3 +4,6 @@ from pydantic import  ValidationError as ValidationError
 from pydantic import  ConfigDict as ConfigDict
 from fastapi import APIRouter as APIRouter
 from fastapi import HTTPException as HTTPException
+
+
+from src.conversion.exceptions import InvalidRomanNumeralValueError as InvalidRomanNumeralValueError
