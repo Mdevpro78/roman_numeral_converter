@@ -65,3 +65,20 @@ def test_empty_string() -> None:
 	"""Test the endpoint with an empty string input for roman numeral."""
 	response = client.post(_endpoint, json={"roman_numeral": ""})
 	assert response.status_code == 422  # Unprocessable Entity for validation errors
+
+
+# Test case insensitivity
+@pytest.mark.parametrize(
+	"roman, expected",
+	[
+		("i", {"integer_value": 1}),  # Lowercase should still be valid
+		("ix", {"integer_value": 9}),
+		("xlIX", {"integer_value": 49}),
+		("MmCdLxvii", {"integer_value": 2467}),  # Mixed cases
+	],
+)
+def test_case_insensitivity(roman, expected) -> None:
+	"""Verify that Roman numeral conversion is case insensitive."""
+	response = client.post(_endpoint, json={"roman_numeral": roman})
+	assert response.status_code == 200
+	assert response.json() == expected
