@@ -29,6 +29,7 @@ dev-dependencies = [
     "add-trailing-comma>=3.1.0",
     "pytest>=8.3.3",
     "roman>=4.2",
+    "pytest-xdist[psutil]>=3.6.1",
 ]
 
 [tool.hatch.metadata]
