@@ -22,6 +22,11 @@ repos:
       - id: pretty-format-json
       - id: check-merge-conflict
       
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.18.0
+    hooks:
+      - id: pyupgrade
+
 
 
 default_language_version:
