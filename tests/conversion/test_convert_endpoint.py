@@ -2,7 +2,7 @@ import roman
 import pytest
 from fastapi.testclient import TestClient
 
-from src.main import app  # Assuming you have a FastAPI app defined
+from src.main import app
 
 client = TestClient(app)
 
@@ -13,7 +13,7 @@ _endpoint = "/api/v1/convert"
 @pytest.mark.parametrize("roman, expected", [(roman.toRoman(_int), {"integer_value": _int}) for _int in range(1, 3999)])
 def test_valid_roman_numerals(roman, expected) -> None:
 	"""Test the conversion of valid Roman numerals to integers."""
-	response = client.post(_endpoint, json={"roman_numeral": roman})  # Adjust endpoint as necessary
+	response = client.post(_endpoint, json={"roman_numeral": roman})
 	assert response.status_code == 200
 	assert response.json() == expected
 
@@ -57,4 +57,11 @@ def test_invalid_roman_numerals(invalid_roman) -> None:
 	in case of invalid ordering and repetition.
 	"""
 	response = client.post(_endpoint, json={"roman_numeral": invalid_roman})
+	assert response.status_code == 422  # Unprocessable Entity for validation errors
+
+
+# Test empty string input
+def test_empty_string() -> None:
+	"""Test the endpoint with an empty string input for roman numeral."""
+	response = client.post(_endpoint, json={"roman_numeral": ""})
 	assert response.status_code == 422  # Unprocessable Entity for validation errors
