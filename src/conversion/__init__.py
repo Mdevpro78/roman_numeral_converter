@@ -9,3 +9,5 @@ from fastapi import HTTPException as HTTPException
 from src.conversion.exceptions import InvalidRomanNumeralValueError as InvalidRomanNumeralValueError
 from src.conversion.value_objects import RomanNumeral as RomanNumeral
 from src.conversion.services import RomanToIntegerService as RomanToIntegerService
+from src.conversion.dtos import RomanRequestDTO as RomanRequestDTO
+from src.conversion.dtos import RomanResponseDTO as RomanResponseDTO
