@@ -112,11 +112,10 @@ http://localhost:8080/redoc
 2. run test script:
 
 ```bash
-docker compose -f docker-compose.yaml -f docker-compose.test.yaml exec -it backend sh /app/scripts/run_tests.sh
+docker compose -f docker-compose.yaml -f docker-compose.test.yaml exec -it backend sh -c "dos2unix /app/scripts/run_tests.sh && /app/scripts/run_tests.sh"
 ```
 
 on linux use `sudo` prefix for previous commands
-
 
 # Project Structure Documentation
 
