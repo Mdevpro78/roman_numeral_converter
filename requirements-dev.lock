@@ -10,3 +10,21 @@
 #   universal: false
 
 -e file:.
+black==24.10.0
+click==8.1.7
+    # via black
+colorama==0.4.6
+    # via click
+mypy-extensions==1.0.0
+    # via black
+packaging==24.1
+    # via black
+pathspec==0.12.1
+    # via black
+platformdirs==4.3.6
+    # via black
+ruff==0.6.9
+tomli==2.0.2
+    # via black
+typing-extensions==4.12.2
+    # via black
