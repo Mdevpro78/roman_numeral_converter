@@ -31,4 +31,3 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/roman_to_integer"]
-

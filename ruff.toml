@@ -49,7 +49,7 @@ select = [
     # pycodestyle
     "E",
     # pycodestyle warnings
-    "W",  
+    "W",
     # Pyflakes
     "F",
     # pyupgrade
@@ -67,17 +67,17 @@ select = [
     # pydocstyle
     "D",
     # flake8-comprehensions
-    "C4",  
+    "C4",
     # flake8-annotations
     "ANN",
     # flake8-async
     "ASYNC",
     # unused arguments in functions
-    "ARG001", 
+    "ARG001",
     # flake8-import-conventions
     "ICN",
     # pyupgrade
-    "UP",  
+    "UP",
 
 ]
 # Ignore specific PEP 8 warnings for indentation and spacing
@@ -128,11 +128,11 @@ ignore = [
     # ANN101: annotation without type
     "ANN101",
     # line too long, handled by black
-    "E501",  
+    "E501",
     # do not perform function calls in argument defaults
-    "B008",  
+    "B008",
     # Allow raising exceptions without from e, for HTTPException
-    "B904",  
+    "B904",
 ]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
