@@ -9,7 +9,6 @@
 #   generate-hashes: false
 #   universal: false
 
--e file:.
 add-trailing-comma==3.1.0
 annotated-types==0.7.0
     # via pydantic
@@ -39,7 +38,6 @@ email-validator==2.2.0
 exceptiongroup==1.2.2
     # via anyio
 fastapi==0.115.2
-    # via roman-to-integer
 fastapi-cli==0.0.5
     # via fastapi
 filelock==3.16.1
