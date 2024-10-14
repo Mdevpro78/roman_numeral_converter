@@ -11,3 +11,4 @@ from src.conversion.value_objects import RomanNumeral as RomanNumeral
 from src.conversion.services import RomanToIntegerService as RomanToIntegerService
 from src.conversion.dtos import RomanRequestDTO as RomanRequestDTO
 from src.conversion.dtos import RomanResponseDTO as RomanResponseDTO
+from src.conversion.routers import router as router
