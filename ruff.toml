@@ -27,24 +27,26 @@ exclude = [
 cache-dir = "./.ruff_cache"
 
 # Group violations by containing file.
-output-format = "full"
+output-format = "concise"
 
 src = [
     "src",
+    "test",
 ]
 # Enumerate all fixed violations.
 show-fixes = true
 
+
 # Same as Black.
-line-length = 120
+line-length = 66
 indent-width = 4
 
-# Assume Python 3.9
-target-version = "py38"
+# Assume Python 3.10
+target-version = "py310"
 
 
 [lint]
-# Enable flake8-bugbear (`B`) rules.
+
 select = [
     # pycodestyle
     "E",
@@ -78,7 +80,8 @@ select = [
     "ICN",
     # pyupgrade
     "UP",
-
+    # Ruff-specific rules
+    "RUF",
 ]
 # Ignore specific PEP 8 warnings for indentation and spacing
 ignore = [
@@ -148,6 +151,27 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 "__init__.py" = ["E402"]
 "**/{tests,docs,tools}/*" = ["E402"]
 
+[lint.flake8-errmsg]
+max-string-length = 20
+
+[lint.flake8-pytest-style]
+parametrize-names-type = "csv"
+parametrize-values-row-type = "tuple"
+parametrize-values-type = "tuple"
+
+[lint.flake8-type-checking]
+exempt-modules = ["typing", "typing_extensions"]
+
+[lint.flake8-unused-arguments]
+ignore-variadic-names = true
+
+[lint.pycodestyle]
+max-doc-length = 66
+
+[lint.pydocstyle]
+convention = "pep257"
+
+
 [lint.isort]
 force-single-line = false
 force-wrap-aliases = false
@@ -155,8 +179,24 @@ lines-after-imports = -1
 lines-between-types = 0
 split-on-trailing-comma = false
 
+[lint.pylint]
+max-args = 5
+max-bool-expr = 5
+max-branches = 5
+max-locals = 7
+max-nested-blocks = 4
+max-positional-args = 5
+
+[lint.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds 5.
+max-complexity = 5
+
 [lint.pyupgrade]
 keep-runtime-typing = true
+
+[lint.ruff]
+# Make it a violation to use a tuple in a subscript without parentheses.
+parenthesize-tuple-in-subscript = true
 
 [format]
 # Like Black, use double quotes for strings.
@@ -169,4 +209,4 @@ indent-style = "tab"
 skip-magic-trailing-comma = false
 
 # Like Black, automatically detect the appropriate line ending.
-line-ending = "auto"
+line-ending = "lf"

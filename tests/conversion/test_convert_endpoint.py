@@ -10,10 +10,19 @@ _endpoint = "/api/v1/convert"
 
 
 # Test valid Roman numerals
-@pytest.mark.parametrize("roman, expected", [(roman.toRoman(_int), {"integer_value": _int}) for _int in range(1, 3999)])
+@pytest.mark.parametrize(
+	"roman, expected",
+	[
+		(roman.toRoman(_int), {"integer_value": _int})
+		for _int in range(1, 3999)
+	],
+)
 def test_valid_roman_numerals(roman, expected) -> None:
 	"""Test the conversion of valid Roman numerals to integers."""
-	response = client.post(_endpoint, json={"roman_numeral": roman})
+	response = client.post(
+		_endpoint,
+		json={"roman_numeral": roman},
+	)
 	assert response.status_code == 200
 	assert response.json() == expected
 
@@ -31,9 +40,15 @@ def test_valid_roman_numerals(roman, expected) -> None:
 	],
 )
 def test_invalid_numeral_type(invalid_input) -> None:
-	"""Test case for handling invalid numeral types, just string type is valid."""
-	response = client.post(_endpoint, json={"roman_numeral": invalid_input})
-	assert response.status_code == 422  # Unprocessable Entity for validation errors
+	"""
+	Test case for handling invalid numeral types,
+	just string type is valid.
+	"""
+	response = client.post(
+		_endpoint,
+		json={"roman_numeral": invalid_input},
+	)
+	assert response.status_code == 422
 
 
 # Test invalid Roman numeral characters
@@ -56,29 +71,43 @@ def test_invalid_roman_numerals(invalid_roman) -> None:
 	Test case for invalid Roman numeral inputs,
 	in case of invalid ordering and repetition.
 	"""
-	response = client.post(_endpoint, json={"roman_numeral": invalid_roman})
-	assert response.status_code == 422  # Unprocessable Entity for validation errors
+	response = client.post(
+		_endpoint,
+		json={"roman_numeral": invalid_roman},
+	)
+	assert response.status_code == 422
 
 
 # Test empty string input
 def test_empty_string() -> None:
-	"""Test the endpoint with an empty string input for roman numeral."""
+	"""
+	Test the endpoint with an empty string input for
+	roman numeral.
+	"""
 	response = client.post(_endpoint, json={"roman_numeral": ""})
-	assert response.status_code == 422  # Unprocessable Entity for validation errors
+	assert response.status_code == 422
 
 
 # Test case insensitivity
+# Lowercase should still be valid and
+# Mixed cases
 @pytest.mark.parametrize(
 	"roman, expected",
 	[
-		("i", {"integer_value": 1}),  # Lowercase should still be valid
+		("i", {"integer_value": 1}),
 		("ix", {"integer_value": 9}),
 		("xlIX", {"integer_value": 49}),
-		("MmCdLxvii", {"integer_value": 2467}),  # Mixed cases
+		("MmCdLxvii", {"integer_value": 2467}),
 	],
 )
 def test_case_insensitivity(roman, expected) -> None:
-	"""Verify that Roman numeral conversion is case insensitive."""
-	response = client.post(_endpoint, json={"roman_numeral": roman})
+	"""
+	Verify that Roman numeral conversion is
+	case insensitive.
+	"""
+	response = client.post(
+		_endpoint,
+		json={"roman_numeral": roman},
+	)
 	assert response.status_code == 200
 	assert response.json() == expected

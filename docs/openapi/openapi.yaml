@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: FastAPI
+  version: 0.1.0
+servers:
+- url: http://localhost:8080
+paths:
+  /api/v1/convert:
+    post:
+      tags:
+      - Conversion
+      summary: Convert Roman To Integer
+      description: |-
+        Convert a Roman numeral to an integer.
+
+        Args:
+        request (RomanRequestDTO):
+        The request containing the Roman numeral.
+
+        service (RomanToIntegerService):
+        The service to perform the conversion.
+
+        Returns:
+        RomanResponseDTO:
+        The response containing the integer value.
+      operationId: convert_roman_to_integer_api_v1_convert_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RomanRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RomanResponseDTO'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RomanRequestDTO:
+      properties:
+        roman_numeral:
+          type: string
+          title: Roman Numeral
+      type: object
+      required:
+      - roman_numeral
+      title: RomanRequestDTO
+      description: DTO for Roman numeral input data.
+    RomanResponseDTO:
+      properties:
+        integer_value:
+          type: integer
+          title: Integer Value
+      type: object
+      required:
+      - integer_value
+      title: RomanResponseDTO
+      description: |-
+        DTO for representing the integer value of
+        a Roman numeral conversion.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

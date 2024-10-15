@@ -9,6 +9,11 @@ repos:
       # Run the formatter.
       - id: ruff-format
 
+  - repo: https://github.com/python-openapi/openapi-spec-validator
+    rev: 0.5.5 # The version to use or 'master' for latest
+    hooks:
+      - id: openapi-spec-validator
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
@@ -17,10 +22,19 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-toml
+      - id: check-json
       - id: check-added-large-files
       - id: detect-private-key
       - id: pretty-format-json
       - id: check-merge-conflict
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: pretty-format-json
+        args: [ --autofix, --no-sort-keys]
+      - id: name-tests-test
+        args: [--pytest-test-first]
+      - id: mixed-line-ending
+        args: ['--fix=lf']
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.18.0
