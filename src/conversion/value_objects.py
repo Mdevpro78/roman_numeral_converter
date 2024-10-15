@@ -129,3 +129,31 @@ class RomanNumeral(BaseModel):
 			prev_char = current
 
 		return False
+
+	def to_integer(self) -> int:
+		"""
+		Converts the Roman numeral value object
+		into its corresponding integer value.
+		"""
+		# Convert each Roman numeral character to
+		# its integer value
+		roman_values = [
+			self.ROMAN_TO_INT_MAP[char] for char in self.roman
+		]
+
+		# Create pairs of adjacent values
+		adjacent_value_pairs = pairwise(roman_values)
+		last_value = roman_values[-1]
+
+		# Calculate the total value using Roman numeral rules:
+		# If a smaller value comes before a larger value,
+		# subtract it, otherwise add it to the total
+		total = (
+			sum(
+				-current if current < next_value else current
+				for current, next_value in adjacent_value_pairs
+			)
+			+ last_value
+		)
+
+		return total
