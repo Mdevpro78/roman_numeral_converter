@@ -127,6 +127,8 @@ on linux use `sudo` prefix for previous commands
 |   `-- images
 |       |-- flowchart.png          # A PNG image of a flowchart illustrating project structure or logic.
 |       `-- flowchart.svg          # An SVG version of the flowchart for scaling purposes.
+|   `-- openapi
+|       |-- openapi.yaml        # An OpenAPI specification file defining API endpoints and their responses.
 |-- scripts
 |   `-- run_tests.sh               # A shell script to execute the test suite for the project.
 |-- src
@@ -222,3 +224,108 @@ Format: Each commit message should consist of three parts: a type, a scope, and 
 ***Scope*** (optional) : The scope provides a hint at what part of the codebase the change affected. It's often omitted if the change is small or affects multiple parts of the codebase.
 
 ***Subject*** : The subject is a brief description of the change, written in the imperative mood (e.g. "Add" instead of "Added").
+
+## GitFlow Workflow Conventions for FastAPI Project
+
+### Branching Model
+
+#### Main Branches
+
+- **main**:
+  - Contains the production-ready state of the codebase.
+  - **No direct commits**; only merges from `release` or `hotfix` branches.
+  - Tagged with version numbers for releases.
+
+- **develop**:
+  - The integration branch for features. It contains the latest development changes.
+  - Reflects the next release version.
+
+#### Supporting Branches
+
+- **feature/**:
+  - Naming convention: `feature/feature-name`
+  - Use for developing new features or enhancements.
+  - Branch off from: `develop`
+  - Merge back into: `develop`
+
+- **release/**:
+  - Naming convention: `release/version-number` (e.g., `release/0.1.0`)
+  - Used for release preparation. Allows for minor bug fixes and meta-data preparation for release.
+  - Branch off from: `develop`
+  - Merge back into: `main` and `develop`
+
+- **hotfix/**:
+  - Naming convention: `hotfix/fix-description` (e.g., `hotfix/fix-login-issue`)
+  - For quick fixes on production releases.
+  - Branch off from: `main`
+  - Merge back into: `main` and `develop`
+
+### Workflow Steps
+
+#### Starting a New Feature
+
+```bash
+git checkout -b feature/my-new-feature develop
+```
+
+- Develop the feature, commit changes with meaningful messages.
+- Push the feature branch to the remote repository if collaboration is needed.
+
+#### Completing a Feature
+
+```bash
+git checkout develop
+git merge --no-ff feature/my-new-feature
+git branch -d feature/my-new-feature
+git push origin develop
+```
+
+#### Preparing a Release
+
+```bash
+git checkout -b release/0.1.0 develop
+```
+
+- Update documentation, version numbers, and make any necessary tweaks.
+- Once ready, merge into `main` and `develop`.
+
+#### Finishing a Release
+
+```bash
+git checkout main
+git merge --no-ff release/0.1.0
+git tag -a v0.1.0 -m "Version 0.1.0"
+git checkout develop
+git merge --no-ff release/0.1.0
+git branch -d release/0.1.0
+git push origin main develop --tags
+```
+
+#### Hotfix Workflow
+
+```bash
+git checkout -b hotfix/issue-fix main
+```
+
+- Fix the issue, commit, then:
+
+```bash
+git checkout main
+git merge --no-ff hotfix/issue-fix
+git checkout develop
+git merge --no-ff hotfix/issue-fix
+git branch -d hotfix/issue-fix
+git push origin main develop
+```
+
+### General Conventions
+
+- **Commit Messages**: Should be descriptive. Use present tense ("Add feature" not "Added feature").
+- **Pull Requests**: Use for merging features into `develop` for code review, even if working alone.
+- **Testing**: Ensure all tests pass before merging into `develop` or `main`.
+- **Documentation**: Update relevant documentation with each feature or change.
+
+### CI/CD
+
+- **Continuous Integration**: Should run on pushes to `develop` and `main` to ensure code quality.
+- **Continuous Deployment**: Automate deployment from `main` branch to production after successful CI checks.
