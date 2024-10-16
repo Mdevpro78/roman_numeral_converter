@@ -1,3 +1,5 @@
+.PHONY: diff
+
 rye_init_env:
 	rye init -v --name roman_to_integer
 
@@ -35,4 +37,12 @@ dupdtests:
 	docker compose -f docker-compose.yaml -f docker-compose.test.yaml up -d
 
 druntest:
-	docker compose -f docker-compose.yaml -f docker-compose.test.yaml exec -it backend sh -c "dos2unix /app/scripts/run_tests.sh && /app/scripts/run_tests.sh"
+	docker compose -f docker-compose.yaml -f docker-compose.test.yaml exec -it \
+	backend sh -c "dos2unix /app/scripts/run_tests.sh && /app/scripts/run_tests.sh"
+
+diff:
+	@if [ -z "$(file)" ]; then \
+		echo "Usage: make diff file=<path/to/file>"; \
+		exit 1; \
+	fi; \
+	git diff master --unified=0 $(file)
