@@ -1,3 +1,4 @@
+import re
 from typing import ClassVar
 from itertools import pairwise
 
@@ -18,7 +19,9 @@ class RomanNumeral(BaseModel):
 	"""
 
 	roman: str
-
+	ROMAN_REGEX: ClassVar[re.Pattern] = re.compile(
+		r"^M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$",
+	)
 	ROMAN_TO_INT_MAP: ClassVar[dict] = {
 		"I": 1,
 		"V": 5,
@@ -28,15 +31,7 @@ class RomanNumeral(BaseModel):
 		"D": 500,
 		"M": 1000,
 	}
-	NON_REPEATING: ClassVar[set] = {"V", "L", "D"}
-	VALID_SUBTRACTIVE_COMBINATIONS: ClassVar[set] = {
-		"IV",
-		"IX",
-		"XL",
-		"XC",
-		"CD",
-		"CM",
-	}
+
 	model_config = ConfigDict(frozen=True)
 
 	@field_validator("roman")
@@ -46,89 +41,13 @@ class RomanNumeral(BaseModel):
 		roman: str,
 	) -> str:
 		"""Ensures the input is a valid Roman numeral."""
-		roman = roman.upper()
-		if not cls._is_valid_roman(roman):
+		roman = roman.strip().upper()
+		if not (roman.isalpha() and cls.ROMAN_REGEX.match(roman)):
 			raise InvalidRomanNumeralValueError(
 				"Input contains invalid Roman numeral characters or sequences.",
 			)
+
 		return roman
-
-	@classmethod
-	def _is_valid_roman(
-		cls: type["RomanNumeral"],
-		roman: str,
-	) -> bool:
-		"""Validates the Roman numeral string."""
-		return (
-			roman.isalpha()
-			and all(c in cls.ROMAN_TO_INT_MAP for c in roman)
-			and not cls._has_invalid_repetitions(
-				roman,
-			)
-			and not cls._has_invalid_subtractive_combinations(
-				roman,
-			)
-		)
-
-	@staticmethod
-	def _has_invalid_repetitions(
-		roman: str,
-	) -> bool:
-		"""
-		Checks for invalid repetitions in
-		the Roman numeral string.
-		"""
-		if any(
-			char * 2 in roman
-			for char in RomanNumeral.NON_REPEATING
-		):
-			return True
-		return any(char * 4 in roman for char in "IXCM")
-
-	@staticmethod
-	def _has_invalid_subtractive_combinations(
-		roman: str,
-	) -> bool:
-		"""
-		Checks for invalid subtractive combinations and
-		ordering.
-		"""
-		max_repeats = {
-			"I": 3,
-			"X": 3,
-			"C": 3,
-			"M": 3,
-			"V": 1,
-			"L": 1,
-			"D": 1,
-		}
-		repeat_count, prev_char = 0, ""
-
-		for current, next_char in pairwise(roman):
-			# Check for invalid ordering and repetition limits
-			if current == prev_char:
-				repeat_count += 1
-				if repeat_count > max_repeats.get(
-					current,
-					1,
-				):
-					return True
-			else:
-				repeat_count = 1
-
-			# Check for invalid subtractive combinations
-			if RomanNumeral.ROMAN_TO_INT_MAP[
-				current
-			] < RomanNumeral.ROMAN_TO_INT_MAP[next_char] and (
-				current + next_char
-				not in RomanNumeral.VALID_SUBTRACTIVE_COMBINATIONS
-				or repeat_count > 1
-			):
-				return True
-
-			prev_char = current
-
-		return False
 
 	def to_integer(self) -> int:
 		"""
