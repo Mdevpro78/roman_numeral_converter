@@ -156,7 +156,7 @@ on linux use `sudo` prefix for previous commands
 |-- ruff.toml                      # Configuration for Ruff, a linting tool to enforce code quality.
 ```
 
-## Algorithm Explaination `<a name = "algorithm"></a>`
+## Algorithm Explaination
 
 ### Flow Chart
 
