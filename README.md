@@ -200,7 +200,7 @@ src/conversion/value_objects.py (Validations) and src/conversion/services.py (Co
 * [X] create github repository
 * [X] ruff and pre-commit (Optional)
 
-## Git Conventions `<a name = "git"></a>`
+## Git Conventions
 
 "Conventional Commits" guidelines:
 
