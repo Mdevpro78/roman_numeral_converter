@@ -9,11 +9,11 @@
 - [Tasks](#tasks)
 - [Git Convention](#git)
 
-## About `<a name = "about"></a>`
+## About
 
 This Project is a web API to convert the roman numerals to integer number through REST API implemented by **FastAPI**
 
-## Getting Started `<a name = "getting_started"></a>`
+## Getting Started
 
 These instructions will help you run the project on your local machine using Docker Compose.
 
